@@ -1,0 +1,31 @@
+.board {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gridGray {
+  composes: grid;
+  background-color: #EEE;
+}
+
+.horizontal {
+  position: absolute;
+  height: 6px;
+  width: calc(100% - 6px);
+  background-color: #EEE;
+  top: 105px;
+  left: 3px;
+}
