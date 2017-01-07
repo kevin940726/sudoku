@@ -1,5 +1,9 @@
-import { range, shuffle, random } from 'lodash';
-import kudoku from './solver/kudoku';
+import { range, shuffle, random, fill } from 'lodash';
+import kudoku from './kudoku';
+
+const replaceAt = (str, index, char) => (
+  str.substr(0, index) + char + str.substr(index + 1)
+);
 
 const Sudoku = () => {
   const solver = kudoku();
@@ -7,22 +11,26 @@ const Sudoku = () => {
   return {
     board: '0'.repeat(81),
     _solver: solver,
+    _problem: '',
     answers: [],
+    notes: [],
 
     init: function(board) {
       if (typeof board === 'string') {
         this.board = board;
       } else if (Array.isArray(board)) {
-        this.board = board.map(row => row.join('')).join('');
+        this.board = board.join('');
       } else {
         throw new Error('Type of board should be string or array!');
       }
 
+      this._problem = this.board;
+      this.notes = fill(Array(81), {});
       return this;
     },
 
     new: function(difficulty) {
-      let board = '0'.repeat(81).split('');
+      let board = '0'.repeat(81);
       const blanks = range(0, 81);
       let r, pos, ans, rList;
 
@@ -31,20 +39,20 @@ const Sudoku = () => {
         pos = blanks[r];
         rList = shuffle(this.findCandidates(board, pos));
         for (let i = 0; i < rList.length; i++) {
-          board[pos] = rList[i];
-          ans = this._solver(board.join(''), 2);
+          board = replaceAt(board, pos, rList[i].toString());
+          ans = this._solver(board, 2);
           if (ans.length) {
             break;
           }
         }
         if (ans.length === 1) {
-          board = ans[0];
+          board = ans[0].ans.join('');
           break;
         }
         blanks.splice(r, 1);
       }
 
-      this.answers = [board];
+      this.answers = ans.slice();
       return this.dig(board);
     },
 
@@ -54,16 +62,14 @@ const Sudoku = () => {
 
       for (let i = 0; i < holes.length; i++) {
         tmp = board[holes[i]];
-        board[holes[i]] = 0;
-        ans = this._solver(board.join(''), 2);
+        board = replaceAt(board, holes[i], '0');
+        ans = this._solver(board, 2);
         if (ans.length === 2) {
-          board[holes[i]] = tmp;
-          continue;
+          board = replaceAt(board, holes[i], tmp);
         }
       }
 
-      this.board = board.join('');
-      return this;
+      return this.init(board);
     },
 
     findCandidates: function(board, pos) {
@@ -90,6 +96,35 @@ const Sudoku = () => {
 
     solve: function(ansLimit = 1) {
       this.answers = this._solver(this.board, ansLimit);
+      return this;
+    },
+
+    isProblem: function(pos) {
+      return this._problem[pos] !== '0';
+    },
+
+    insert: function(pos, num) {
+      if (!this.isProblem(pos) && (this.findCandidates(this.board, pos).includes(num) || num === 0)) {
+        this.board = replaceAt(this.board, pos, num);
+      }
+
+      return this;
+    },
+
+    insertNote: function(pos, note) {
+      // this.notes[pos][note] = !this.notes[pos][note];
+      this.notes[pos] = {
+        ...this.notes[pos],
+        [note]: !this.notes[pos][note],
+      };
+
+      return this;
+    },
+
+    clearNotes: function(pos) {
+      this.notes[pos] = {};
+
+      return this;
     },
 
     prettyPrint: function(board) {

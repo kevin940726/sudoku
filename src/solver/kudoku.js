@@ -105,6 +105,7 @@ function sudoku_solver() {
 	// solve a Sudoku; _s is the standard dot/number representation; max_ret sets the maximum number of returned solutions
 	return function(_s, max_ret) {
 		var r, c, r2, min, cand, dir, hints = 0; // dir=1: forward; dir=-1: backtrack
+    var count = 0; // count the operation needed to solve the problem
 		// sr[r]: # times the row is forbidden by others; cr[i]: row chosen at step i
 		// sc[c]: bit 1-7 - # allowed choices; bit 8: the constraint has been used or not
 		// cc[i]: col chosen at step i
@@ -124,6 +125,7 @@ function sudoku_solver() {
 					min = cand>>16, cc[i] = cand&0xffff
 					if (min > 1) {
 						for (c = 0; c < 324; ++c) {
+              count++;
 							if (sc[c] < min) {
 								min = sc[c], cc[i] = c; // choose the top constraint
 								if (min <= 1) break; // this is for acceleration; slower without this line
@@ -145,7 +147,10 @@ function sudoku_solver() {
 			var y = []
 			for (var j = 0; j < 81; ++j) y[j] = out[j]
 			for (var j = 0; j < i; ++j) r = R[cc[j]][cr[j]], y[Math.floor(r/9)] = r%9 + 1; // the solution array (81 numbers)
-			ret.push(y)
+			ret.push({
+        ans: y,
+        count,
+      });
 			if (ret.length >= max_ret) return ret;
 			--i; dir = -1; // backtrack
 		}
