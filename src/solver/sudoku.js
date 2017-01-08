@@ -1,5 +1,6 @@
 import { range, shuffle, random, fill } from 'lodash';
 import kudoku from './kudoku';
+import EventEmitter from 'eventemitter3';
 
 const replaceAt = (str, index, char) => (
   str.substr(0, index) + char + str.substr(index + 1)
@@ -17,6 +18,7 @@ const Sudoku = () => {
     isSolved: false,
     _timer: null,
     time: 0,
+    _emitter: new EventEmitter(),
 
     init: function(board) {
       if (typeof board === 'string') {
@@ -31,9 +33,11 @@ const Sudoku = () => {
       this.notes = fill(Array(81), {});
       this.isSolved = false;
       this.time = 0;
+      this._emitter.emit('timeOnUpdate', this.time);
       clearInterval(this._timer);
       this._timer = setInterval(() => {
         this.time += 1;
+        this._emitter.emit('timeOnUpdate', this.time);
       }, 1000);
       return this;
     },
