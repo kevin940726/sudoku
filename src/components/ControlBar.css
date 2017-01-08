@@ -1,0 +1,27 @@
+.controlBar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.newGameBtn {
+  height: 41px;
+  width: 41px;
+  padding: 0;
+  display: flex;
+  position: relative;
+  border: 1px solid #999;
+  font-size: 18px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.15s ease-out;
+  background-color: #FFF;
+
+  &:hover {
+    background-color: rgba(245, 245, 245, 0.7);
+  }
+}
