@@ -1,3 +1,12 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}
+
 .numPad {
   position: absolute;
   top: 50%;
@@ -11,14 +20,22 @@
 }
 
 .num {
-  position: relative;
+  position: absolute;
   width: 50px;
   height: 50px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   border-radius: 50%;
   text-align: center;
-  background-color: #FEFEFE;
+  background-color: #FFF;
   z-index: 11;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  cursor: default;
+  transition: transform 0.15s ease-out;
+  color: #000;
 }
