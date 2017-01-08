@@ -14,6 +14,11 @@
   overflow: visible;
 }
 
+.blockProblem {
+  composes: block;
+  color: #000;
+}
+
 .notes {
   display: flex;
   justify-content: flex-start;

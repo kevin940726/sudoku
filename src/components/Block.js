@@ -30,18 +30,22 @@ class Block extends React.Component {
   }
 
   handleClick() {
-    this.setState({
-      isNumPadShow: !this.state.isNumPadShow,
-      isNote: false,
-    });
+    if (!this.props.isProblem) {
+      this.setState({
+        isNumPadShow: !this.state.isNumPadShow,
+        isNote: false,
+      });
+    }
   }
   handleRightClick(e) {
     e.preventDefault();
 
-    this.setState({
-      isNumPadShow: !this.state.isNumPadShow,
-      isNote: true,
-    });
+    if (!this.props.isProblem) {
+      this.setState({
+        isNumPadShow: !this.state.isNumPadShow,
+        isNote: true,
+      });
+    }
   }
 
   handleClickOutside() {
@@ -51,11 +55,11 @@ class Block extends React.Component {
   }
 
   render() {
-    const { pos, value, notes } = this.props;
+    const { pos, value, notes, isProblem } = this.props;
     const { isNumPadShow, isNote } = this.state;
 
     return (
-      <div className={style.block} onClick={this.handleClick} onContextMenu={this.handleRightClick}>
+      <div className={isProblem ? style.blockProblem : style.block} onClick={this.handleClick} onContextMenu={this.handleRightClick}>
         {value !== 0 && value !== '0' ?
           value :
           Object.keys(notes).length !== 0 && (

@@ -14,6 +14,7 @@ const Sudoku = () => {
     _problem: '',
     answers: [],
     notes: [],
+    isSolved: false,
 
     init: function(board) {
       if (typeof board === 'string') {
@@ -26,6 +27,7 @@ const Sudoku = () => {
 
       this._problem = this.board;
       this.notes = fill(Array(81), {});
+      this.isSolved = false;
       return this;
     },
 
@@ -106,6 +108,10 @@ const Sudoku = () => {
     insert: function(pos, num) {
       if (!this.isProblem(pos) && (this.findCandidates(this.board, pos).includes(num) || num === 0)) {
         this.board = replaceAt(this.board, pos, num);
+      }
+
+      if (this.board === this.answers[0].ans.join('')) {
+        this.isSolved = true;
       }
 
       return this;
