@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import ControlBar from './containers/ControlBar';
-import Board from './components/Board';
+import ControlBar from '../containers/ControlBar';
+import Board from './Board';
 
 class App extends Component {
   render() {
