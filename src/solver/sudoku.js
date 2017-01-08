@@ -15,6 +15,8 @@ const Sudoku = () => {
     answers: [],
     notes: [],
     isSolved: false,
+    _timer: null,
+    time: 0,
 
     init: function(board) {
       if (typeof board === 'string') {
@@ -28,6 +30,11 @@ const Sudoku = () => {
       this._problem = this.board;
       this.notes = fill(Array(81), {});
       this.isSolved = false;
+      this.time = 0;
+      clearInterval(this._timer);
+      this._timer = setInterval(() => {
+        this.time += 1;
+      }, 1000);
       return this;
     },
 
@@ -111,14 +118,13 @@ const Sudoku = () => {
       }
 
       if (this.board === this.answers[0].ans.join('')) {
-        this.isSolved = true;
+        return this.solved();
       }
 
       return this;
     },
 
     insertNote: function(pos, note) {
-      // this.notes[pos][note] = !this.notes[pos][note];
       this.notes[pos] = {
         ...this.notes[pos],
         [note]: !this.notes[pos][note],
@@ -129,6 +135,13 @@ const Sudoku = () => {
 
     clearNotes: function(pos) {
       this.notes[pos] = {};
+
+      return this;
+    },
+
+    solved: function() {
+      this.isSolved = true;
+      clearInterval(this._timer);
 
       return this;
     },
