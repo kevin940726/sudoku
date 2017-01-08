@@ -12,11 +12,21 @@
   line-height: 40px;
   color: #555;
   overflow: visible;
+  cursor: default;
+  transition: background-color 0.15s ease-out;
+
+  &:hover {
+    background-color: rgba(245, 245, 245, 0.7);
+  }
 }
 
 .blockProblem {
   composes: block;
   color: #000;
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 .notes {
@@ -46,4 +56,5 @@
   font-size: 12px;
   align-items: center;
   justify-content: center;
+  cursor: default;
 }
