@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './ControlBar.css';
-import { padStart } from 'lodash';
 
 class Time extends React.Component {
   constructor(props) {
@@ -18,8 +17,10 @@ class Time extends React.Component {
   }
 
   render() {
+    const { time } = this.state;
+
     return (
-      <div>{padStart(this.state.time, 4, '0')}</div>
+      <div>{'0000'.substr(0, 4 - time.toString().length) + time.toString()}</div>
     );
   }
 }
