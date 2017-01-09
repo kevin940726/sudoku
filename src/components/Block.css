@@ -1,15 +1,15 @@
 .block {
   position: relative;
   display: flex;
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   padding: 5px;
   background-clip: content-box;
   justify-content: center;
   align-items: center;
   box-shadow: inset 0 0 0 4px #FFF, inset 0 0 0 5px #999;
-  font-size: 25px;
-  line-height: 40px;
+  font-size: 20px;
+  line-height: 35px;
   color: #555;
   overflow: visible;
   cursor: default;

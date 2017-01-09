@@ -4,33 +4,41 @@ import style from './NumPad.css';
 import { range } from 'lodash';
 import { Motion, spring } from 'react-motion';
 
-const angleToCoor = (num, r) => ([
-  `${Math.cos(Math.PI * 2 / 9 * (num - 1) - Math.PI / 2) * r}px`,
-  `${Math.sin(Math.PI * 2 / 9 * (num - 1) - Math.PI / 2) * r}px`,
-].join(','));
+const customSpring = (i) => (
+  spring(i, { stiffness: 230, damping: 32 })
+);
 
 const NumPad = ({ handleClickOutside, handleClick }) => (
   <div className={style.container}>
     <div className={style.numPad}>
-      <span
-        className={style.num}
-        key="0"
-        onClick={() => handleClick(0)}
-      >X</span>
       {range(1, 10).map(num => (
-        <Motion key={num} defaultStyle={{ r: 0 }} style={{ r: spring(55, {stiffness: 200, damping: 15}) }}>
-          {interpolatingStyle => (
+        <Motion key={num} defaultStyle={{ i: 0 }} style={{ i: customSpring(100) }}>
+          {({ i }) => (
             <span
               className={style.num}
               key={num}
               onClick={() => handleClick(num)}
-              style={{ transform: `translate(${angleToCoor(num, interpolatingStyle.r)})` }}
+              style={{
+                transform: `translate(${((num - 1) % 3 - 1) * i}%, ${(~~((num - 1) / 3) - 1) * i}%)`,
+              }}
             >
               {num}
             </span>
           )}
         </Motion>
       ))}
+      <Motion defaultStyle={{ i: 0 }} style={{ i: customSpring(100) }}>
+        {({ i }) => (
+          <span
+            className={style.num}
+            key="0"
+            onClick={() => handleClick(0)}
+            style={{
+              transform: `translate(0, ${2 * i}%)`,
+            }}
+          >X</span>
+        )}
+      </Motion>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="0" width="0">
       <defs>

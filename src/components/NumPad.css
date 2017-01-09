@@ -12,22 +12,25 @@
   top: 50%;
   left: 50%;
   margin: auto;
-  height: 200px;
-  width: 200px;
+  height: 0;
+  width: 0;
   transform: translate(-50%, -50%);
   z-index: 10;
   filter: url(#goo);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  overflow: visible;
 }
 
 .num {
   position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  top: -22.5px;
+  left: -22.5px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   text-align: center;
   background-color: #FFF;
@@ -36,6 +39,4 @@
   justify-content: center;
   align-items: center;
   cursor: default;
-  transition: transform 0.15s ease-out;
-  color: #000;
 }
