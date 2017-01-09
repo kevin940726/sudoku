@@ -30,7 +30,7 @@ class Block extends React.Component {
   }
 
   handleClick() {
-    if (!this.props.isProblem) {
+    if (!this.props.isProblem && !this.props.isSolved) {
       this.setState({
         isNumPadShow: !this.state.isNumPadShow,
         isNote: false,
@@ -40,7 +40,7 @@ class Block extends React.Component {
   handleRightClick(e) {
     e.preventDefault();
 
-    if (!this.props.isProblem) {
+    if (!this.props.isProblem && !this.props.isSolved) {
       this.setState({
         isNumPadShow: !this.state.isNumPadShow,
         isNote: true,
