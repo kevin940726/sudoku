@@ -30,4 +30,9 @@
   &:hover {
     background-color: rgba(245, 245, 245, 0.7);
   }
+
+  i {
+    line-height: 37px;
+    color: #FFC107;
+  }
 }

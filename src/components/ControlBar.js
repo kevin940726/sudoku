@@ -29,7 +29,7 @@ const ControlBar = ({ newGame, emitter }) => (
   <div className={style.controlBar}>
     <div></div>
     <button className={style.newGameBtn} onClick={newGame}>
-      <span style={{ marginLeft: '-3px' }}><i className="material-icons">star</i></span>
+      <span><i className="material-icons">star</i></span>
     </button>
     <Time emitter={emitter} />
   </div>
