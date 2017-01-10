@@ -36,7 +36,7 @@ const NumPad = ({ handleClickOutside, handleClick }) => (
             style={{
               transform: `translate(0, ${2 * i}%)`,
             }}
-          >X</span>
+          ><i className="material-icons">space_bar</i></span>
         )}
       </Motion>
     </div>

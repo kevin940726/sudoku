@@ -1,4 +1,4 @@
-import { range, shuffle, random, fill } from 'lodash';
+import { range, shuffle, random, fill, chunk } from 'lodash';
 import kudoku from './kudoku';
 import EventEmitter from 'eventemitter3';
 
@@ -66,6 +66,7 @@ const Sudoku = () => {
       }
 
       this.answers = ans.slice();
+      this.prettyPrint(this.answers[0].ans);
       return this.dig(board);
     },
 
@@ -150,8 +151,25 @@ const Sudoku = () => {
       return this;
     },
 
+    /* what happens here is not important at all,
+     * just for debugging.
+     */
     prettyPrint: function(board) {
-      console.log(board.match(/.{1,9}/g).map(row => row.split('').map(c => c === '0' ? '_' : c).join(' ')).join('\n'), '\n');
+      const arr = typeof board === 'string' ? board.split('') : board;
+
+      console.log(
+        chunk(
+          chunk(arr, 9).map(row =>
+            chunk(row, 3).map(grid => grid.join(' ')).join(' | ')
+          )
+        , 3)
+          .map(grid =>
+            grid.join('\n')
+          )
+          .join('\n' + ['-'.repeat(6), '-'.repeat(7), '-'.repeat(6)].join('+') + '\n')
+      );
+
+      return this;
     },
   };
 };
