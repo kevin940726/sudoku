@@ -1,12 +1,14 @@
+/* @flow */
 import { range, shuffle, random, fill, chunk } from 'lodash';
 import kudoku from './kudoku';
 import EventEmitter from 'eventemitter3';
+import type { BoardInput, Answers, SudokuObjectLiteral } from './sudoku.flow';
 
-const replaceAt = (str, index, char) => (
+const replaceAt = (str: string, index: number, char: string): string => (
   str.substr(0, index) + char + str.substr(index + 1)
 );
 
-const Sudoku = () => {
+const Sudoku = (): SudokuObjectLiteral => {
   const solver = kudoku();
 
   return {
@@ -16,11 +18,11 @@ const Sudoku = () => {
     answers: [],
     notes: [],
     isSolved: false,
-    _timer: null,
+    _timer: 0,
     time: 0,
     _emitter: new EventEmitter(),
 
-    init: function(board) {
+    init: function(board: BoardInput) {
       if (typeof board === 'string') {
         this.board = board;
       } else if (Array.isArray(board)) {
@@ -42,10 +44,13 @@ const Sudoku = () => {
       return this;
     },
 
-    new: function(difficulty) {
-      let board = '0'.repeat(81);
-      const blanks = range(0, 81);
-      let r, pos, ans, rList;
+    new: function(difficulty: ?number) {
+      let board: string = '0'.repeat(81);
+      const blanks: Array<number> = range(0, 81);
+      let r: number;
+      let pos: number;
+      let ans: Answers = [];
+      let rList: Array<number>;
 
       while (blanks.length) {
         r = random(blanks.length - 1);
@@ -70,9 +75,10 @@ const Sudoku = () => {
       return this.dig(board);
     },
 
-    dig: function(board) {
-      const holes = shuffle(range(0, 81));
-      let ans, tmp;
+    dig: function(board: string) {
+      const holes: Array<number> = shuffle(range(0, 81));
+      let ans: Answers;
+      let tmp: string;
 
       for (let i = 0; i < holes.length; i++) {
         tmp = board[holes[i]];
@@ -86,12 +92,12 @@ const Sudoku = () => {
       return this.init(board);
     },
 
-    findCandidates: function(board, pos) {
-      let candidates = range(0, 10);
+    findCandidates: function(board: string, pos: number): Array<number> {
+      let candidates: Array<number> = range(0, 10);
 
-      const cs = pos % 9;
-      const rs = pos - cs;
-      const gs = (rs - rs % 27) + (cs - cs % 3);
+      const cs: number = pos % 9;
+      const rs: number = pos - cs;
+      const gs: number = (rs - rs % 27) + (cs - cs % 3);
 
       for (let r = rs, c = cs; r < rs + 9; r++, c += 9) {
         candidates[+board[r]] = 0;
@@ -108,18 +114,18 @@ const Sudoku = () => {
       return candidates.filter(c => c !== 0);
     },
 
-    solve: function(ansLimit = 1) {
+    solve: function(ansLimit: number = 1) {
       this.answers = this._solver(this.board, ansLimit);
       return this;
     },
 
-    isProblem: function(pos) {
+    isProblem: function(pos: number): boolean {
       return this._problem[pos] !== '0';
     },
 
-    insert: function(pos, num) {
+    insert: function(pos: number, num: number) {
       if (!this.isProblem(pos) && (this.findCandidates(this.board, pos).includes(num) || num === 0)) {
-        this.board = replaceAt(this.board, pos, num);
+        this.board = replaceAt(this.board, pos, num.toString());
       }
 
       if (this.board === this.answers[0].ans.join('')) {
@@ -129,7 +135,7 @@ const Sudoku = () => {
       return this;
     },
 
-    insertNote: function(pos, note) {
+    insertNote: function(pos: number, note: number) {
       this.notes[pos] = {
         ...this.notes[pos],
         [note]: !this.notes[pos][note],
@@ -138,7 +144,7 @@ const Sudoku = () => {
       return this;
     },
 
-    clearNotes: function(pos) {
+    clearNotes: function(pos: number) {
       this.notes[pos] = {};
 
       return this;
@@ -154,8 +160,8 @@ const Sudoku = () => {
     /* what happens here is not important at all,
      * just for debugging.
      */
-    prettyPrint: function(board) {
-      const arr = typeof board === 'string' ? board.split('') : board;
+    prettyPrint: function(board: string | Array<number>) {
+      const arr: Array<string> | Array<number> = typeof board === 'string' ? board.split('') : board;
 
       console.log(
         chunk(
