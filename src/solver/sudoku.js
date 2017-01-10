@@ -136,10 +136,12 @@ const Sudoku = (): SudokuObjectLiteral => {
     },
 
     insertNote: function(pos: number, note: number) {
-      this.notes[pos] = {
-        ...this.notes[pos],
-        [note]: !this.notes[pos][note],
-      };
+      if (note > 0 && note <= 9) {
+        this.notes[pos] = {
+          ...this.notes[pos],
+          [note]: !this.notes[pos][note],
+        };
+      }
 
       return this;
     },
