@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './ControlBar.css';
 
-class Time extends React.Component {
+class Timer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,7 +20,10 @@ class Time extends React.Component {
     const { time } = this.state;
 
     return (
-      <div>{'0000'.substr(0, 4 - time.toString().length) + time.toString()}</div>
+      <div className={style.timer}>
+        <i className="material-icons">timer</i>
+        {'0000'.substr(0, 4 - time.toString().length) + time.toString()}
+      </div>
     );
   }
 }
@@ -29,9 +32,9 @@ const ControlBar = ({ newGame, emitter }) => (
   <div className={style.controlBar}>
     <div></div>
     <button className={style.newGameBtn} onClick={newGame}>
-      <span><i className="material-icons">star</i></span>
+      <span><i className="material-icons">fiber_new</i></span>
     </button>
-    <Time emitter={emitter} />
+    <Timer emitter={emitter} />
   </div>
 );
 

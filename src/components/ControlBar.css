@@ -33,6 +33,27 @@
 
   i {
     line-height: 37px;
-    color: #FFC107;
+    font-size: 30px;
+    color: #999;
+  }
+}
+
+.timer {
+  position: relative;
+  height: 37px;
+  display: flex;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: #FFF;
+
+  i {
+    line-height: 37px;
+    font-size: 25px;
+    color: #999;
+    margin-right: 5px;
   }
 }
