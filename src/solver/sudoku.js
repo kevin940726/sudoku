@@ -2,9 +2,9 @@
 import { range, shuffle, random, fill, chunk } from 'lodash';
 import kudoku from './kudoku';
 import EventEmitter from 'eventemitter3';
-import type { BoardInput, Answers, SudokuObjectLiteral } from './sudoku.flow';
+import type { BoardInput, Answers, SudokuObjectLiteral, Notes } from './sudoku.flow';
 
-const replaceAt = (str: string, index: number, char: string): string => (
+export const replaceAt = (str: string, index: number, char: string): string => (
   str.substr(0, index) + char + str.substr(index + 1)
 );
 
@@ -22,17 +22,21 @@ const Sudoku = (): SudokuObjectLiteral => {
     time: 0,
     _emitter: new EventEmitter(),
 
-    init: function(board: BoardInput) {
+    init: function(board: BoardInput, notes: Notes = fill(new Array(81), {})) {
       if (typeof board === 'string') {
         this.board = board;
       } else if (Array.isArray(board)) {
         this.board = board.join('');
+      } else if (board === null || typeof board === 'undefined') {
+        const game = this.new();
+        game.notes = notes.slice();
+        return game;
       } else {
         throw new Error('Type of board should be string or array!');
       }
 
       this._problem = this.board;
-      this.notes = fill(Array(81), {});
+      this.notes = notes.slice();
       this.isSolved = false;
       this.time = 0;
       this._emitter.emit('timeOnUpdate', this.time);
@@ -71,7 +75,9 @@ const Sudoku = (): SudokuObjectLiteral => {
       }
 
       this.answers = ans.slice();
-      this.prettyPrint(this.answers[0].ans);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(this.prettyPrint(this.answers[0].ans));
+      }
       return this.dig(board);
     },
 
@@ -128,7 +134,7 @@ const Sudoku = (): SudokuObjectLiteral => {
         this.board = replaceAt(this.board, pos, num.toString());
       }
 
-      if (this.board === this.answers[0].ans.join('')) {
+      if (this.answers.length && this.board === this.answers[0].ans.join('')) {
         return this.solved();
       }
 
@@ -165,19 +171,15 @@ const Sudoku = (): SudokuObjectLiteral => {
     prettyPrint: function(board: string | Array<number>) {
       const arr: Array<string> | Array<number> = typeof board === 'string' ? board.split('') : board;
 
-      console.log(
-        chunk(
-          chunk(arr, 9).map(row =>
-            chunk(row, 3).map(grid => grid.join(' ')).join(' | ')
-          )
-        , 3)
-          .map(grid =>
-            grid.join('\n')
-          )
-          .join('\n' + ['-'.repeat(6), '-'.repeat(7), '-'.repeat(6)].join('+') + '\n')
-      );
-
-      return this;
+      return chunk(
+        chunk(arr, 9).map(row =>
+          chunk(row, 3).map(grid => grid.join(' ')).join(' | ')
+        )
+      , 3)
+        .map(grid =>
+          grid.join('\n')
+        )
+        .join('\n' + ['-'.repeat(6), '-'.repeat(7), '-'.repeat(6)].join('+') + '\n')
     },
   };
 };
