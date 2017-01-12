@@ -27,14 +27,27 @@ const NumPad = ({ handleClickOutside, handleClick }) => (
           )}
         </Motion>
       ))}
-      <Motion defaultStyle={{ i: 0 }} style={{ i: customSpring(100) }}>
-        {({ i }) => (
+      <Motion
+        defaultStyle={{
+          i: 0,
+          width: 45,
+          left: -22.5,
+        }}
+        style={{
+          i: customSpring(100),
+          width: spring(45 * 3),
+          left: spring(-22.5 - 45),
+        }}
+      >
+        {({ i, width, left }) => (
           <span
-            className={style.num}
+            className={style.num0}
             key="0"
             onClick={() => handleClick(0)}
             style={{
               transform: `translate(0, ${2 * i}%)`,
+              width: `${width}px`,
+              left: `${left}px`,
             }}
           ><i className="material-icons">space_bar</i></span>
         )}

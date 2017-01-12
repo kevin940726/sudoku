@@ -40,3 +40,10 @@
   align-items: center;
   cursor: default;
 }
+
+.num0 {
+  composes: num;
+  width: calc(45px * 3);
+  left: calc(-22.5px - 45px);
+  border-radius: 10px;
+}
