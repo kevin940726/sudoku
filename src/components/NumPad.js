@@ -8,7 +8,7 @@ const customSpring = (i) => (
   spring(i, { stiffness: 230, damping: 32 })
 );
 
-const NumPad = ({ handleClickOutside, handleClick }) => (
+const NumPad = ({ handleClickOutside, handleClick, isNote }) => (
   <div className={style.container}>
     <div className={style.numPad}>
       {range(1, 10).map(num => (
@@ -21,9 +21,7 @@ const NumPad = ({ handleClickOutside, handleClick }) => (
               style={{
                 transform: `translate(${((num - 1) % 3 - 1) * i}%, ${(~~((num - 1) / 3) - 1) * i}%)`,
               }}
-            >
-              {num}
-            </span>
+            >{num}</span>
           )}
         </Motion>
       ))}
@@ -49,7 +47,7 @@ const NumPad = ({ handleClickOutside, handleClick }) => (
               width: `${width}px`,
               left: `${left}px`,
             }}
-          ><i className="material-icons">space_bar</i></span>
+          ><i className="material-icons">{isNote ? 'clear' : 'space_bar'}</i></span>
         )}
       </Motion>
     </div>

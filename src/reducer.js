@@ -11,6 +11,11 @@ const reducer = handleActions({
     game: state.game.insertNote(action.payload.pos, action.payload.num),
   }),
 
+  CLEAR_NOTES: (state, action) => ({
+    ...state,
+    game: state.game.clearNotes(action.payload),
+  }),
+
   NEW_GAME: (state) => ({
     ...state,
     game: state.game.new(),
