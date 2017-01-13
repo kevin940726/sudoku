@@ -25,6 +25,11 @@ const reducer = handleActions({
     ...state,
     candidates: state.game.findCandidates(state.game.board, action.payload),
   }),
+
+  TOGGLE_TIMER: (state) => ({
+    ...state,
+    game: state.game.toggleTimer(),
+  }),
 }, {
 
 });

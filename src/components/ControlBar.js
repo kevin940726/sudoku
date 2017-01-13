@@ -29,13 +29,13 @@ class Timer extends React.Component {
   }
 }
 
-const ControlBar = ({ newGame, emitter }) => (
+const ControlBar = ({ newGame, emitter, toggleTimer }) => (
   <div className={style.controlBar}>
     <div></div>
     <button className={style.newGameBtn} onClick={newGame}>
       <span><i className="material-icons">fiber_new</i></span>
     </button>
-    <Timer emitter={emitter} />
+    <Timer emitter={emitter} toggleTimer={toggleTimer} />
   </div>
 );
 

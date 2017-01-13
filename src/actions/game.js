@@ -9,3 +9,5 @@ export const clearNotes = createAction('CLEAR_NOTES');
 export const newGame = createAction('NEW_GAME');
 
 export const findCandidates = createAction('FIND_CANDIDATES');
+
+export const toggleTimer = createAction('TOGGLE_TIMER');
