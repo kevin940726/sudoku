@@ -130,7 +130,7 @@ const Sudoku = (): SudokuObjectLiteral => {
     },
 
     insert: function(pos: number, num: number) {
-      if (!this.isProblem(pos) && (this.findCandidates(this.board, pos).includes(num) || num === 0)) {
+      if (!this.isProblem(pos)) {
         this.board = replaceAt(this.board, pos, num.toString());
       }
 

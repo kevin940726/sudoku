@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Block from '../components/Block';
+import { findCandidates } from '../actions/game';
 
 const mapStateToProps = (state, ownProps) => ({
   value: state.game.board[ownProps.pos],
@@ -8,4 +9,10 @@ const mapStateToProps = (state, ownProps) => ({
   isSolved: state.game.isSolved,
 });
 
-export default connect(mapStateToProps)(Block);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  findCandidates: () => {
+    dispatch(findCandidates(ownProps.pos));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Block);

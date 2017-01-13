@@ -8,14 +8,14 @@ const customSpring = (i) => (
   spring(i, { stiffness: 230, damping: 32 })
 );
 
-const NumPad = ({ handleClickOutside, handleClick, isNote }) => (
+const NumPad = ({ handleClickOutside, handleClick, isNote, candidates }) => (
   <div className={style.container}>
     <div className={style.numPad}>
       {range(1, 10).map(num => (
         <Motion key={num} defaultStyle={{ i: 0 }} style={{ i: customSpring(100) }}>
           {({ i }) => (
             <span
-              className={style.num}
+              className={candidates.includes(num) ? style.num : style.numDisable}
               key={num}
               onClick={() => handleClick(num)}
               style={{

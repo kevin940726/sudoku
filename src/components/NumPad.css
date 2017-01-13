@@ -39,7 +39,8 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  cursor: default;
+  cursor: pointer;
+  color: #000;
 }
 
 .num0 {
@@ -47,4 +48,9 @@
   width: calc(45px * 3);
   left: calc(-22.5px - 45px);
   border-radius: 10px;
+}
+
+.numDisable {
+  composes: num;
+  color: #CCC;
 }

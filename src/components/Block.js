@@ -55,7 +55,7 @@ class Block extends React.Component {
   }
 
   render() {
-    const { pos, value, notes, isProblem } = this.props;
+    const { pos, value, notes, isProblem, findCandidates } = this.props;
     const { isNumPadShow, isNote } = this.state;
 
     return (
@@ -71,6 +71,7 @@ class Block extends React.Component {
             handleClickOutside={this.handleClickOutside}
             pos={pos}
             isNote={isNote}
+            candidates={findCandidates()}
           />
         )}
       </div>

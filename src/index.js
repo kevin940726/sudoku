@@ -14,6 +14,7 @@ const store = createStore(
   reducer,
   {
     game: game.new(),
+    candidates: [],
   },
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );

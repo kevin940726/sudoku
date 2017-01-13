@@ -20,6 +20,11 @@ const reducer = handleActions({
     ...state,
     game: state.game.new(),
   }),
+
+  FIND_CANDIDATES: (state, action) => ({
+    ...state,
+    candidates: state.game.findCandidates(state.game.board, action.payload),
+  }),
 }, {
 
 });

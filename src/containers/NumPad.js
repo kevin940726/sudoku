@@ -2,6 +2,10 @@ import { connect } from 'react-redux';
 import NumPad from '../components/NumPad';
 import { insert, insertNote, clearNotes } from '../actions/game';
 
+const mapStateToProps = (state) => ({
+  candidates: state.candidates,
+});
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
   handleClick: (num) => {
     if (ownProps.isNote) {
@@ -16,4 +20,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(NumPad);
+export default connect(mapStateToProps, mapDispatchToProps)(NumPad);
