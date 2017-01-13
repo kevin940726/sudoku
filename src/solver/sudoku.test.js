@@ -159,3 +159,21 @@ test('findCandidates should correctly return the candidates array', t => {
   board = replaceAt(board, 20, '0');
   t.deepEqual(findCandidates(board, 20), [9]); // check grid
 });
+
+test('it should successfully initialize the timer', t => {
+  const game = Sudoku().init();
+
+  t.truthy(game._timer);
+});
+
+test('it should successfully pause the timer', t => {
+  const game = Sudoku().init().pauseTimer();
+
+  t.falsy(game._timer);
+});
+
+test('it should successfully restart the timer', t => {
+  const game = Sudoku().init().pauseTimer().startTimer();
+
+  t.truthy(game._timer);
+});

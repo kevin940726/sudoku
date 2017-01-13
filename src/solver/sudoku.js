@@ -38,13 +38,8 @@ const Sudoku = (): SudokuObjectLiteral => {
       this._problem = this.board;
       this.notes = notes.slice();
       this.isSolved = false;
-      this.time = 0;
       this._emitter.emit('timeOnUpdate', this.time);
-      clearInterval(this._timer);
-      this._timer = setInterval(() => {
-        this.time += 1;
-        this._emitter.emit('timeOnUpdate', this.time);
-      }, 1000);
+      this.pauseTimer().startTimer();
       return this;
     },
 
@@ -161,6 +156,24 @@ const Sudoku = (): SudokuObjectLiteral => {
     solved: function() {
       this.isSolved = true;
       clearInterval(this._timer);
+
+      return this;
+    },
+
+    pauseTimer: function() {
+      clearInterval(this._timer);
+      this._timer = 0;
+
+      return this;
+    },
+
+    startTimer: function() {
+      if (!this._timer) {
+        this._timer = setInterval(() => {
+          this.time += 1;
+          this._emitter.emit('timeOnUpdate', this.time);
+        }, 1000);
+      }
 
       return this;
     },
