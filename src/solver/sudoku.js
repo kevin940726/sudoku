@@ -38,6 +38,7 @@ const Sudoku = (): SudokuObjectLiteral => {
       this._problem = this.board;
       this.notes = notes.slice();
       this.isSolved = false;
+      this.time = 0;
       this._emitter.emit('timeOnUpdate', this.time);
       this.pauseTimer().startTimer();
       return this;
