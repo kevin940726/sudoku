@@ -178,6 +178,14 @@ const Sudoku = (): SudokuObjectLiteral => {
       return this;
     },
 
+    toggleTimer: function() {
+      if (this._timer) {
+        return this.pauseTimer();
+      } else {
+        return this.startTimer();
+      }
+    },
+
     /* what happens here is not important at all,
      * just for debugging.
      */

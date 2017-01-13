@@ -18,10 +18,11 @@ class Timer extends React.Component {
 
   render() {
     const { time } = this.state;
+    const { toggleTimer } = this.props;
 
     return (
       <div className={style.timer}>
-        <i className="material-icons">timer</i>
+        <i className="material-icons" onClick={toggleTimer}>timer</i>
         {'0000'.substr(0, 4 - time.toString().length) + time.toString()}
       </div>
     );

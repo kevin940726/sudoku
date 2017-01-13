@@ -177,3 +177,10 @@ test('it should successfully restart the timer', t => {
 
   t.truthy(game._timer);
 });
+
+test('it should successfully toggle the timer', t => {
+  const game = Sudoku().init();
+
+  t.falsy(game.toggleTimer()._timer);
+  t.truthy(game.toggleTimer()._timer);
+});
